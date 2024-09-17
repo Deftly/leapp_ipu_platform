@@ -34,7 +34,8 @@ const Sidebar = () => {
                 <TooltipTrigger asChild>
                   <NavLink
                     to={link.href}
-                    className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base transition-colors duration-00 ease-in-out
+                    // transition-colors duration-200 ease-in-out
+                    className={`group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base 
                       ${isActive ? "bg-gray-200 rounded-sm" : "bg-primary"}`}
                   >
                     <LinkIcon />
