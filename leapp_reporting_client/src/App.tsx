@@ -13,10 +13,13 @@ const App = () => {
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path="workflows" element={<Workflows />} />
-          <Route path="workflows/:hostname/:txId/stages" element={<Stages />} />
-          <Route path="hosts" element={<Hosts />} />
-          <Route path="analytics" element={<Analytics />} />
+          <Route path="data/workflows" element={<Workflows />} />
+          <Route
+            path="data/workflows/:hostname/:txId/stages"
+            element={<Stages />}
+          />
+          <Route path="data/hosts" element={<Hosts />} />
+          <Route path="data/analytics" element={<Analytics />} />
           <Route path="FAQ" element={<UnderConstruction />} />
         </Route>
       </Routes>
