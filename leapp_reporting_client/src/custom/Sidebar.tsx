@@ -14,9 +14,9 @@ import {
 
 const links = [
   { name: "Home", href: "/", icon: LayoutDashboardIcon },
-  { name: "Workflows", href: "data/workflows", icon: WorkflowIcon },
-  { name: "Hosts", href: "data/hosts", icon: ServerIcon },
-  { name: "Analytics", href: "data/analytics", icon: ChartCandlestickIcon },
+  { name: "Workflows", href: "/data/workflows", icon: WorkflowIcon },
+  { name: "Hosts", href: "/data/hosts", icon: ServerIcon },
+  { name: "Analytics", href: "/data/analytics", icon: ChartCandlestickIcon },
 ];
 
 const Sidebar = () => {
