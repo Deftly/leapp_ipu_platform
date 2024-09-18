@@ -23,7 +23,7 @@ const UnderConstruction = ({ page }: { page: string }) => {
         </div>
         <div className="mx-auto mt-16 text-center sm:mt-20">
           <NavLink
-            to="/workflows"
+            to="/"
             className="text-base font-semibold leading-7 text-blue-600"
           >
             <span aria-hidden="true">&larr;</span> Back
