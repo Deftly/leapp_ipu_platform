@@ -1,9 +1,23 @@
+from datetime import datetime, timezone
 from logger import get_logger
 
 logger = get_logger(__name__)
 
 
 class WorkflowProcessor:
+    _NON_AUTOMATION_FAILURES = {
+        "Check for NFS mounts": [],
+        "Ensure Changefile Directory Exists": [],
+        "Check for inhibitors": [],
+        "Fail if any previous stage failed": [],
+        "Call error in order to fail stage.": [],
+        "Change the permission of bootloader file to 700": [],
+        "Gathering Facts": [],
+        "Run Setup Module": [],
+        "Validating arguments against arg spec 'os_verification' - Verifies OS Version": [],
+        "Backup /etc/bac.conf": [],
+    }
+
     def __init__(self, config):
         self.config = config
 
@@ -36,8 +50,12 @@ class WorkflowProcessor:
                 )
 
             # Update finished time
-            if job["finished"] > workflows[workflow_id]["finished"]:
-                workflows[workflow_id]["finished"] = job["finished"]
+            job_finished = self._parse_datetime(job["finished"])
+            if job_finished and (
+                not workflows[workflow_id]["finished"]
+                or job_finished > workflows[workflow_id]["finished"]
+            ):
+                workflows[workflow_id]["finished"] = job_finished
 
         # Determine final workflow status
         for workflow in workflows.values():
@@ -52,4 +70,12 @@ class WorkflowProcessor:
     def _check_automation_failure(self, job):
         # Implement logic to determine if the failure is an automation failure
         # This might involve checking the failed tasks or other job details
-        pass
+        for failed_task in job.get("failed_tasks", []):
+            if failed_task["task"] not in self._NON_AUTOMATION_FAILURES:
+                return True
+        return False
+
+    def _parse_datetime(self, dt_string):
+        if dt_string:
+            return datetime.fromisoformat(dt_string).replace(tzinfo=timezone.utc)
+        return None

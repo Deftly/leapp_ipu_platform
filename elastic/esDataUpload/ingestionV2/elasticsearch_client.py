@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch, helpers
-from datetime import datetime
+from datetime import datetime, timezone
 from logger import get_logger
+from utils import retry_with_backoff
 
 logger = get_logger(__name__)
 
@@ -11,6 +12,7 @@ class ElasticsearchClient:
         self.es = Elasticsearch([config.es_url])
         self.index = config.es_index
 
+    @retry_with_backoff(max_retries=3, backoff_in_seconds=1)
     def get_last_processed_time(self, region):
         query = {
             "size": 1,
@@ -25,9 +27,9 @@ class ElasticsearchClient:
                 result["hits"]["hits"][0]["_source"]["finished"]
             )
         else:
-            # Return a default start date if no previous data exists
-            return datetime(2024, 2, 1, 6, 0, 0)
+            return datetime(2024, 2, 1, 6, 0, 0, tzinfo=timezone.utc)
 
+    @retry_with_backoff(max_retries=3, backoff_in_seconds=1)
     def update_workflows(self, workflows):
         actions = []
         for workflow in workflows:

@@ -19,5 +19,14 @@ class Config:
             "dmz": os.getenv("AAP_BASE_URL_DMZ"),
         }
 
+        self.aap_cookies = {
+            "amrs": os.getenv("AAP_COOKIE_AMRS"),
+            "emea": os.getenv("AAP_COOKIE_EMEA"),
+            "apac": os.getenv("AAP_COOKIE_APAC"),
+            "dmz": os.getenv("AAP_COOKIE_DMZ"),
+        }
+
         self.es_url = os.getenv("ELASTICSEARCH_URL")
         self.es_index = os.getenv("ELASTICSEARCH_INDEX", "rhel_upgrade_reporting")
+
+        self.app_page_size = int(os.getenv("AAP_PAGE_SIZE", "200"))
