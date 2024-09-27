@@ -29,4 +29,4 @@ class Config:
         self.es_url = os.getenv("ELASTICSEARCH_URL")
         self.es_index = os.getenv("ELASTICSEARCH_INDEX", "rhel_upgrade_reporting")
 
-        self.app_page_size = int(os.getenv("AAP_PAGE_SIZE", "200"))
+        self.aap_page_size = int(os.getenv("AAP_PAGE_SIZE", "200"))
